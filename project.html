@@ -1,12 +1,14 @@
 <!DOCTYPE html>
+<!-- === ФИКС XSS ХУЙНИ BY ZROZDEV ===
+				13/10/2025
+	Всё ещё пиздец дыряво но уже без XSS -->	  
 <html lang="ru">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Тестовая соц сеть</title>
-    <link rel="icon" href="favicon.png" type="image/png">
-<link rel="stylesheet" href="project_styles.css">
+    <title>Тестовая соцсеть</title>
+    <link rel="stylesheet" href="src/style.css">
 <!customcode>
 </head>
 
@@ -69,7 +71,7 @@ main{
 
 .post-card{
   background:var(--light-gray);
-  border-radius:14px;
+  border-radius:0px;
   overflow:hidden;
   margin-bottom:16px;
   box-shadow:0 2px 8px rgba(0,0,0,0.05);
@@ -82,7 +84,7 @@ main{
 .post-date{
   position:absolute; top:8px; right:12px;
   background:var(--yellow); color:var(--text);
-  padding:3px 8px; border-radius:8px; font-size:12px; font-weight:500;
+  padding:3px 8px; border-radius:30px; font-size:12px; font-weight:500;
 }
 .post-actions{ display:flex; align-items:center; justify-content:space-between; padding:10px 14px 14px; }
 .actions-left{ display:flex; align-items:center; gap:14px; }
@@ -94,7 +96,7 @@ main{
 
 .search-box{
   display:flex; align-items:center; gap:10px;
-  background:var(--light-gray); border-radius:30px; padding:10px 14px;
+  background:var(--light-gray); border-radius:0px; padding:10px 14px;
   border:1px solid #e9e9e9; margin-bottom:16px;
 }
 .search-box:focus-within{ box-shadow:0 0 0 4px rgba(230,0,0,0.06); border-color:var(--red); }
@@ -109,7 +111,7 @@ main{
 .create-form textarea{ resize:vertical; min-height:120px; }
 .create-form input[type="file"]{ padding:6px; }
 .submit-btn{
-  background:var(--red); color:var(--white); padding:10px 14px; border:none; border-radius:8px; cursor:pointer; font-weight:600;
+  background:var(--red); color:var(--white); padding:10px 14px; border:none; border-radius:10px; cursor:pointer; font-weight:600;
 }
 
 .telegram-info{ text-align:center; margin-top:50px; }
@@ -117,7 +119,7 @@ main{
 
 .auth-form{ display:flex; flex-direction:column; gap:16px; margin-top:20px; max-width:420px; margin-left:auto;margin-right:auto; background:#f4f4f4; padding:20px; border-radius:12px; }
 .auth-form input{ padding:12px; border-radius:8px; border:1px solid #ddd; width:100%; font-size:14px; }
-.auth-form button{ background:var(--red); color:white; padding:12px; border:none; border-radius:8px; cursor:pointer; font-weight:600; }
+.auth-form button{ background:var(--red); color:white; padding:12px; border:none; border-radius:12px; cursor:pointer; font-weight:600; }
 .small-link{ color:var(--red); cursor:pointer; text-decoration:underline; text-align:center; }
 
 .profile-box{ text-align:center; background:#e8e8e8; padding:30px; border-radius:12px; }
@@ -129,7 +131,7 @@ main{
 .overlay.active{ display:block; }
 .comments-popup{
   position:fixed; left:0; right:0; bottom:-100%; background:var(--white);
-  border-radius:14px 14px 0 0; padding:16px; max-height:60vh; overflow:auto; z-index:100; transition:0.32s;
+  border-radius:0px 0px 0 0; padding:16px; max-height:60vh; overflow:auto; z-index:100; transition:0.32s;
 }
 .comments-popup.active{ bottom:0; }
 .comment-item{ border-bottom:1px solid #eee; padding:8px 0; }
@@ -137,7 +139,7 @@ main{
 .comment-item p{ font-size:14px; color:var(--text); }
 .comment-form{ display:flex; gap:8px; margin-top:10px; }
 .comment-form input{ flex:1; padding:8px 10px; border-radius:8px; border:1px solid #ddd; }
-.comment-form button{ padding:8px 12px; background:var(--red); color:white; border:none; border-radius:8px; cursor:pointer; }
+.comment-form button{ padding:8px 12px; background:var(--red); color:white; border:none; border-radius:0px; cursor:pointer; }
 
 .bottom-bar{
   position:fixed; left:0; right:0; bottom:0; height:60px; background:var(--white);
@@ -159,7 +161,10 @@ main{
 
 <main>
 <section class="page active" id="home"></section>
-
+	<br>
+	<a href="http://xxxxx7xhhweu7fvhe2lsyfs5xcgievxeliobsyqz6e4hi7o3zxocnnqd.onion" target="_blank">
+	<img style="widows: 500px;height: 100;max-height: 100px;max-width: 99%; border:1px solid grey; text-align: center; display: block; width: fit-content; margin: 0 auto;" width="600" height="100" src="ad.gif">
+	</a>
 <section class="page" id="search">
   <div class="search-box">
     <i class="ri-search-line"></i>
@@ -212,6 +217,16 @@ main{
 </nav>
 
 <script type="module">
+let currentUser = null;
+
+const savedUser = localStorage.getItem('currentUser');
+if(savedUser) {
+  currentUser = savedUser;
+  renderProfile();
+} else {
+  renderAuth();
+}
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
 import { getDatabase, ref, set, get, update } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js";
 
@@ -228,8 +243,13 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-let currentUser=null;
-const myIP="185.146.112.225";
+//const myIP="185.146.112.225";
+
+const allowedIPs = [
+  "185.146.112.225",
+  "46.172.79.130"
+];
+
 const navBtns=document.querySelectorAll('.nav-btn');
 navBtns.forEach(btn=>{
   btn.addEventListener('click',()=>{
@@ -244,14 +264,19 @@ navBtns.forEach(btn=>{
   });
 });
 
-function checkAddAccess(){
-  fetch('https://api.ipify.org/?format=json').then(res=>res.json()).then(data=>{
-    if(data.ip===myIP) document.getElementById('add').style.display='block';
-    else document.getElementById('add').style.display='none';
-  });
+function checkAddAccess() {
+  fetch('https://api.ipify.org/?format=json')
+    .then(res => res.json())
+    .then(data => {
+      const userIP = data.ip;
+      if (allowedIPs.includes(userIP)) {
+        document.getElementById('add').style.display = 'block';
+      } else {
+        document.getElementById('add').style.display = 'none';
+      }
+    });
 }
 
-// --- Auth/Profile ---
 function renderAuth(){
   const container=document.getElementById('authContainer');
   container.innerHTML=`
@@ -286,6 +311,7 @@ function renderAuth(){
     if(!username||!email||!pass){ alert('Заполните все поля'); return; }
     await set(ref(db,`Accounts/${username}`),{email,password:pass,avatar:'https://picsum.photos/120',likes:{},dislikes:{},comments:{}});
     currentUser=username;
+	localStorage.setItem('currentUser', username);
     alert('Регистрация успешна!');
     renderProfile();
   });
@@ -404,7 +430,13 @@ document.body.addEventListener('click',async e=>{
       const c=comments[key];
       const div=document.createElement('div');
       div.className='comment-item';
-      div.innerHTML=`<strong>${c.user}</strong><p>${c.text}</p>`;
+	  const strong = document.createElement('strong');
+	  strong.textContent = c.user;
+	  const p = document.createElement('p');
+	  p.textContent = c.text;
+	  div.appendChild(strong);
+	  div.appendChild(p);
+
       commentsList.appendChild(div);
     });
   }
@@ -432,7 +464,13 @@ sendCommentBtn.addEventListener('click',async ()=>{
   commentInput.value='';
   const div=document.createElement('div');
   div.className='comment-item';
-  div.innerHTML=`<strong>${currentUser}</strong><p>${text}</p>`;
+  const strong = document.createElement('strong');
+  strong.textContent = currentUser;
+  const p = document.createElement('p');
+  p.textContent = text;
+  div.appendChild(strong);
+  div.appendChild(p);
+
   commentsList.appendChild(div);
 });
 
@@ -479,32 +517,6 @@ async function populateSearch(){
     });
   });
 }
-// --- XSS защита ---
-function sanitizeHTML(str) {
-  const temp = document.createElement("div");
-  temp.textContent = str;
-  return temp.innerHTML;
-}
-
-// --- Восстановление пользователя при загрузке ---
-let savedUser = localStorage.getItem('currentUser');
-if (savedUser) {
-  currentUser = savedUser;
-  renderProfile();
-}
-
-// --- Сохранение при регистрации / входе ---
-async function register(username, email, pass) {
-  await set(ref(db,`Accounts/${username}`), {
-    email,
-    password: pass,
-    avatar:'https://picsum.photos/120',
-    likes:{},dislikes:{},comments:{}
-  });
-  currentUser = username;
-  localStorage.setItem('currentUser', username);
-  renderProfile();
-}
 
 async function login(loginUser, loginPass) {
   const snap = await get(ref(db,`Accounts/${loginUser}`));
@@ -517,7 +529,20 @@ async function login(loginUser, loginPass) {
   renderProfile();
 }
 
+function escapeHTML(str) {
+  return str.replace(/[&<>"']/g, tag => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  }[tag] || tag));
+}
+
 </script>
+
+<!-- Прошлый фикс который не работает нахуй <script src="fix/xss_fix.js"></script> -->
+
 </body>
 </html>
 </body>
