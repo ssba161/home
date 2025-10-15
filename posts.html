@@ -540,6 +540,43 @@ function escapeHTML(str) {
   }[tag] || tag));
 }
 
+//Статус типа дохуя важный да
+function replaceHetmanWithImage() {
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  const nodesToReplace = [];
+
+  while (walker.nextNode()) {
+    const node = walker.currentNode;
+    if (
+      node.parentNode &&
+      node.parentNode.dataset?.hetman === 'true'
+    ) continue;
+
+    if (node.nodeValue.includes('ZrozTheHetman✓')) {
+      nodesToReplace.push(node);
+    }
+  }
+
+  nodesToReplace.forEach(node => {
+    const range = document.createRange();
+    const startIndex = node.nodeValue.indexOf('ZrozTheHetman✓');
+    range.setStart(node, startIndex);
+    range.setEnd(node, startIndex + 'ZrozTheHetman✓'.length);
+
+    const img = document.createElement('img');
+    img.src = 'status/nick.png';
+    img.style.height = '20px';
+    img.style.width = '30px;';
+    img.dataset.hetman = 'true'; 
+
+    range.deleteContents();
+    range.insertNode(img);
+  });
+}
+
+setInterval(replaceHetmanWithImage, 100);
+
+window.addEventListener('load', replaceHetmanWithImage);
 </script>
 
 <!-- Прошлый фикс который не работает нахуй <script src="fix/xss_fix.js"></script> -->
