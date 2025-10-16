@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- === ФИКС XSS ХУЙНИ BY ZROZDEV ===
+<!-- === ФИКС XSS ХУЙНИ BY TIMOSHA BLYAT ===
 				13/10/2025
 	Всё ещё пиздец дыряво но уже без XSS -->	  
 <html lang="ru">
@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>1131 Проспект — Сайт</title>
+    <title>Скинхеды Сталинисты Боевые Антифашисты</title></title>
     <link rel="icon" href="favicon.png" type="image/png">
 <link rel="stylesheet" href="project_styles.css">
 <!customcode>
@@ -155,8 +155,8 @@ main{
 </head>
 <body>
 <header class="top-bar">
-  <span style="color:var(--yellow); font-weight:700; font-size:24px;">1131</span>
-  <span>Проспект</span>
+  <span style="color:var(--yellow); font-weight:700; font-size:24px;">ССБА</span>
+  <span>| Сайт</span>
   <img src="https://i.ibb.co/tpcPrDZM" alt="">
 </header>
 
@@ -189,8 +189,8 @@ main{
 <section class="page" id="telegram">
   <div class="telegram-info">
     <h2>Наш Telegram-канал</h2>
-    <p>Подписывайся, чтобы не пропустить новости!</p>
-    <a href="https://t.me/fck_131" class="tg-button" target="_blank"><i class="ri-telegram-fill"></i> Перейти в Telegram</a>
+    <p>Подписывайся, на наш тгк ССБА!</p>
+    <a href="https://t.me/Stalinhead" class="tg-button" target="_blank"><i class="ri-telegram-fill"></i> Перейти в Telegram</a>
   </div>
 </section>
 
@@ -232,23 +232,25 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebas
 import { getDatabase, ref, set, get, update } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCidNF4Y4KtInPicVuiHpsyM3UtnXfjHuI",
-  authDomain: "baseofsos.firebaseapp.com",
-  databaseURL: "https://baseofsos-default-rtdb.firebaseio.com",
-  projectId: "baseofsos",
-  storageBucket: "baseofsos.firebasestorage.app",
-  messagingSenderId: "543658307069",
-  appId: "1:543658307069:web:6089023d57da67ddeffd94",
-  measurementId: "G-X39SMCSECC"
+const firebaseConfig = {
+  apiKey: "AIzaSyAPaQAulU_BYZhMT_xM_q8CgDBA85SRs98",
+  authDomain: "ssba-58900.firebaseapp.com",
+  databaseURL: "https://ssba-58900-default-rtdb.firebaseio.com",
+  projectId: "ssba-58900",
+  storageBucket: "ssba-58900.firebasestorage.app",
+  messagingSenderId: "615638249829",
+  appId: "1:615638249829:web:57df9392e733e295ef718c",
+  measurementId: "G-HHR5C1Y4J2"
 };
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
+
 //const myIP="185.146.112.225";
 
 const allowedIPs = [
-  "185.146.112.225",
-  "46.172.79.130"
+  "тут",
+  "тут 2"
 ];
 
 const navBtns=document.querySelectorAll('.nav-btn');
@@ -586,3 +588,4 @@ window.addEventListener('load', replaceHetmanWithImage);
 </body>
 
 </html>
+
